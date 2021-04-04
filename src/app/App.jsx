@@ -6,13 +6,14 @@ import {
   ThemeProvider,
   withStyles,
 } from "@material-ui/core";
-import { lightGreen, red } from "@material-ui/core/colors";
+import { lightGreen, brown } from "@material-ui/core/colors";
 import { Provider } from "react-redux";
 import _ from "lodash";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 //* components
-import Layout from "./layout/Layout";
+import Home from "./routes/home/Home";
+import Portfolio from "./routes/portfolio/Portfolio";
 
 //* actions
 import { SET_THEME } from "../store/actions/actions";
@@ -24,11 +25,29 @@ import store from "../store/store";
 const style = (theme) => ({});
 
 const theme = createMuiTheme({
+  //=? PALETTE
   palette: {
-    primary: lightGreen,
-    secondary: red,
+    primary: {
+      light: "#a98274",
+      main: "#795548",
+      dark: "#4b2c20",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#cfff95",
+      main: "#9ccc65",
+      dark: "#6b9b37",
+      contrastText: "#fff",
+    },
     text: {
-      primary: red[50],
+      primary: brown[400],
+    },
+  },
+  //=? TYPOGRAPHY
+  typography: {
+    fontFamily: "Spartan, Roboto, Helvetica, Arial, sans-serif",
+    h1: {
+      fontFamily: '"Barriecito" cursive',
     },
   },
 });
@@ -53,7 +72,11 @@ const App = ({ classes }) => {
 
       <Provider store={store}>
         <BrowserRouter>
-          <Route path={"/:filter?"} component={Layout}></Route>
+          <Switch>
+            <Route path={"/portfolio"} component={Portfolio}></Route>
+            <Route path={"/"} component={Home}></Route>
+            <Redirect to="/" />
+          </Switch>
         </BrowserRouter>
       </Provider>
     </ThemeProvider>

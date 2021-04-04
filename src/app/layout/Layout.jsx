@@ -3,7 +3,7 @@ import { Box, Fade, withStyles } from "@material-ui/core";
 import _ from "lodash";
 
 //* compnents
-import NavBar from "./nav/NavBar";
+import NavBar from "../routes/home/components/NavBar";
 
 //=b css
 const style = (theme) => ({
@@ -12,6 +12,7 @@ const style = (theme) => ({
     height: "100vh",
     position: "fixed",
     overflow: "hidden",
+    opacity: 0.25,
     zIndex: -100,
     "& img": {
       width: "100%",
@@ -21,10 +22,14 @@ const style = (theme) => ({
   },
 
   title: {
-    fontFamily: "Permanent Marker, cursive",
+    // fontFamily: "Permanent Marker, cursive",
+    lineHeight: 1,
     textAlign: "end",
-    // color: "white",
-    fontSize: "10rem",
+    color: theme.palette.primary.dark,
+    fontSize: "8rem",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "5rem",
+    },
   },
 });
 
@@ -43,7 +48,7 @@ const Layout = ({ classes }) => {
   return (
     <>
       <div className={classes.background}>
-        <img src="/images/background.jpg" alt="Lucia Zavatta web page" />
+        <img src="/images/back2.jpg" alt="Lucia Zavatta web page" />
       </div>
 
       {/* //=? */}
@@ -56,7 +61,7 @@ const Layout = ({ classes }) => {
         }}
       >
         <Box p={10} className={classes.title}>
-          Lucia Zavatta
+          LUCIA <br /> ZAVATTA
         </Box>
       </Fade>
 
