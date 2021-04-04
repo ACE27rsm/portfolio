@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Fade, Slide, withStyles } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import _ from "lodash";
 
 //=b css
@@ -56,11 +57,13 @@ const NavLink = withStyles(style)(({ classes, timeout, icon, alt }) => {
           transitionDelay: timeout,
         }}
       >
-        <Box width={100} height={100} position="relative">
-          <Box width={100} height={100} p={2} className={classes.iconRoot}>
-            <img src={icon} alt={alt} />
+        <Link to="/portfolio">
+          <Box width={100} height={100} position="relative">
+            <Box width={100} height={100} p={2} className={classes.iconRoot}>
+              <img src={icon} alt={alt} />
+            </Box>
           </Box>
-        </Box>
+        </Link>
       </Slide>
     </Box>
   );

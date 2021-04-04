@@ -1,40 +1,50 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Fade, withStyles } from "@material-ui/core";
 import _ from "lodash";
 
-//* compnents
-import NavBar from "../routes/home/components/NavBar";
+//* static
+import { colors, fonts } from "../../settings";
 
 //=b css
-const style = (theme) => ({
-  background: {
-    width: "100vw",
-    height: "100vh",
-    position: "fixed",
-    overflow: "hidden",
-    opacity: 0.25,
-    zIndex: -100,
-    "& img": {
-      width: "100%",
-      height: "100%",
-      objectFit: "cover",
-    },
-  },
+const style = (theme) => {
+  console.log("SPACE", theme.spacing(10));
+  const pad = theme.spacing(5);
 
-  title: {
-    // fontFamily: "Permanent Marker, cursive",
-    lineHeight: 1,
-    textAlign: "end",
-    color: theme.palette.primary.dark,
-    fontSize: "8rem",
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "5rem",
+  const childrenHeight = `calc(100vh - ${pad * 2}px)`;
+
+  return {
+    root: {
+      padding: pad,
+      position: "relative",
+      background: colors.background,
+      minHeight: "100vh",
+      minWidth: "100vw",
     },
-  },
-});
+
+    section: {
+      background: colors.background,
+      fontFamily: fonts.title,
+      padding: pad / 2,
+      color: theme.palette.primary.dark,
+      position: "absolute",
+      top: 0,
+      right: 0,
+      fontSize: "1.5rem",
+      textAlign: "end",
+    },
+
+    children: {
+      paddingTop: pad / 1.5,
+      border: "2px solid",
+      borderColor: theme.palette.primary.dark,
+      minHeight: childrenHeight,
+      padding: pad / 2,
+    },
+  };
+};
 
 //=STRT ================================
-const Layout = ({ classes }) => {
+const Layout = ({ classes, children, section }) => {
   //=y State
 
   //=? Cycle
@@ -46,27 +56,10 @@ const Layout = ({ classes }) => {
   //=o Variables
 
   return (
-    <>
-      <div className={classes.background}>
-        <img src="/images/back2.jpg" alt="Lucia Zavatta web page" />
-      </div>
-
-      {/* //=? */}
-      <Fade
-        in={true}
-        timeout={{
-          appear: 2500,
-          enter: 1500,
-          exit: 500,
-        }}
-      >
-        <Box p={10} className={classes.title}>
-          LUCIA <br /> ZAVATTA
-        </Box>
-      </Fade>
-
-      <NavBar />
-    </>
+    <Box className={classes.root}>
+      <Box className={classes.section}>{section}</Box>
+      <Box className={classes.children}>{children}</Box>
+    </Box>
   );
 };
 
