@@ -9,7 +9,13 @@ import {
 import { lightGreen, brown } from "@material-ui/core/colors";
 import { Provider } from "react-redux";
 import _ from "lodash";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import {
+  HashRouter,
+  BrowserRouter,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 
 //* components
 import Home from "./routes/home/Home";
@@ -67,19 +73,21 @@ const App = ({ classes }) => {
   //=o Variables
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <HashRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
 
-      <Provider store={store}>
-        <BrowserRouter>
-          <Switch>
-            <Route path={"/portfolio"} component={Portfolio}></Route>
-            <Route path={"/"} component={Home}></Route>
-            <Redirect to="/" />
-          </Switch>
-        </BrowserRouter>
-      </Provider>
-    </ThemeProvider>
+        <Provider store={store}>
+          <BrowserRouter>
+            <Switch>
+              <Route path={"/portfolio"} component={Portfolio}></Route>
+              <Route path={"/"} component={Home}></Route>
+              <Redirect to="/" />
+            </Switch>
+          </BrowserRouter>
+        </Provider>
+      </ThemeProvider>
+    </HashRouter>
   );
 };
 
