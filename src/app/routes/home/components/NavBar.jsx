@@ -5,27 +5,69 @@ import _ from "lodash";
 
 //=b css
 const style = (theme) => ({
+  root: {
+    width: "100%",
+  },
+
   icon: {
     width: "100%",
     height: "100%",
     objectFit: "contain",
   },
+  iconContainer: {
+    width: 100,
+    height: 100,
+    position: "relative",
+    [theme.breakpoints.down("xs")]: {
+      width: 150,
+      height: 150,
+    },
+  },
+
   iconRoot: {
     background: "rgba(255,255,255,0.2)",
     boxShadow: theme.shadows[2],
     borderRadius: 50,
     transition: "0.4s",
     position: "absolute",
+    [theme.breakpoints.down("xs")]: {
+      borderRadius: 75,
+    },
     "&:hover": {
       boxShadow: theme.shadows[15],
       marginLeft: -5,
       marginTop: -5,
     },
   },
+  navItemRoot: {
+    marginBottom: "50px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      flexDirection: "column-reverse",
+      alignItems: "center",
+    },
+  },
+
+  navLabel: {
+    marginRight: theme.spacing(2),
+    fontSize: "1.2rem",
+    textAlign: "end",
+    flexGrow: 1,
+    color: theme.palette.primary.dark,
+    [theme.breakpoints.down("xs")]: {
+      width: "100%",
+      textAlign: "center",
+      marginRight: 0,
+      marginTop: theme.spacing(1),
+    },
+  },
 });
 
 //g -----------------------------------
-const NavLink = withStyles(style)(({ classes, timeout, icon, alt }) => {
+const NavLink = withStyles(style)(({ classes, timeout, icon, label, to }) => {
   //=y State
   const [labelIn, setLabelIn] = useState(false);
 
@@ -33,22 +75,9 @@ const NavLink = withStyles(style)(({ classes, timeout, icon, alt }) => {
   useEffect(() => setTimeout(() => setLabelIn(true), 2500), []);
 
   return (
-    <Box
-      marginBottom="50px"
-      display="flex"
-      alignItems="center"
-      justifyContent="space-between"
-    >
+    <Box className={classes.navItemRoot}>
       <Fade in={labelIn}>
-        <Box
-          mr={2}
-          fontSize="1.2rem"
-          textAlign="end"
-          flexGrow={1}
-          color="primary.dark"
-        >
-          {alt}
-        </Box>
+        <Box className={classes.navLabel}>{label}</Box>
       </Fade>
       <Slide
         direction="left"
@@ -57,10 +86,10 @@ const NavLink = withStyles(style)(({ classes, timeout, icon, alt }) => {
           transitionDelay: timeout,
         }}
       >
-        <Link to="/portfolio">
-          <Box width={100} height={100} position="relative">
-            <Box width={100} height={100} p={2} className={classes.iconRoot}>
-              <img src={icon} alt={alt} />
+        <Link to={to}>
+          <Box className={classes.iconContainer}>
+            <Box width={1} height={1} p={2} className={classes.iconRoot}>
+              <img src={icon} alt={label} />
             </Box>
           </Box>
         </Link>
@@ -82,10 +111,25 @@ const NavBar = ({ classes }) => {
   //=o Variables
 
   return (
-    <Box>
-      <NavLink timeout={1000} icon="icons/portfolio.svg" alt="Portfolio" />
-      <NavLink timeout={1500} icon="icons/curriculum.svg" alt="Curriculum" />
-      <NavLink timeout={2000} icon="icons/contatti.svg" alt="Contatti" />
+    <Box className={classes.root}>
+      <NavLink
+        timeout={1000}
+        icon="icons/portfolio.svg"
+        label="Portfolio"
+        to="/portfolio"
+      />
+      <NavLink
+        timeout={1500}
+        icon="icons/curriculum.svg"
+        label="Curriculum"
+        to="/portfolio"
+      />
+      <NavLink
+        timeout={2000}
+        icon="icons/contatti.svg"
+        label="Contatti"
+        to="/portfolio"
+      />
     </Box>
   );
 };

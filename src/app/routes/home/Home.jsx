@@ -33,6 +33,10 @@ const style = (theme) => ({
     },
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(4),
+      fontSize: "4.2rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      padding: theme.spacing(4),
       fontSize: "3rem",
     },
     [theme.breakpoints.down("xs")]: {
@@ -41,11 +45,30 @@ const style = (theme) => ({
     },
   },
 
+  subTitle: {
+    fontSize: "2rem",
+    [theme.breakpoints.down("lg")]: {
+      fontSize: "1.5rem",
+    },
+    [theme.breakpoints.down("md")]: {
+      fontSize: "1rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.75rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.5rem",
+    },
+  },
+
   navbar: {
     padding: theme.spacing(10),
     display: "flex",
     justifyContent: "flex-end",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("lg")]: {
+      padding: theme.spacing(4),
+    },
+    [theme.breakpoints.down("md")]: {
       padding: theme.spacing(4),
     },
     [theme.breakpoints.down("xs")]: {
@@ -81,7 +104,7 @@ const Home = ({ classes }) => {
       <Fade
         in={true}
         timeout={{
-          appear: 2500,
+          appear: 1500,
           enter: 1500,
           exit: 500,
         }}
@@ -93,7 +116,7 @@ const Home = ({ classes }) => {
               <Box flexGrow={1} mr={3}>
                 <Box width={1} height="1px" className={classes.stroke} />
               </Box>
-              <Box fontSize="2rem">Graphic Designer</Box>
+              <Box className={classes.subTitle}>Graphic Designer</Box>
             </Box>
           </Box>
         </Box>
