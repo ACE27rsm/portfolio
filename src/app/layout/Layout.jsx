@@ -1,6 +1,6 @@
+import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { Box, Fade, withStyles } from "@material-ui/core";
-import _ from "lodash";
+import { Box, withStyles } from "@material-ui/core";
 
 //* static
 import { colors, fonts } from "../../settings";
@@ -10,8 +10,6 @@ const style = (theme) => {
   console.log("SPACE", theme.spacing(10));
   const pad = theme.spacing(5);
 
-  const childrenHeight = `calc(100vh - ${pad * 2}px)`;
-
   return {
     root: {
       padding: pad,
@@ -19,6 +17,9 @@ const style = (theme) => {
       background: colors.background,
       minHeight: "100vh",
       minWidth: "100vw",
+      [theme.breakpoints.down("xs")]: {
+        padding: pad / 2,
+      },
     },
 
     section: {
@@ -31,20 +32,28 @@ const style = (theme) => {
       right: 0,
       fontSize: "1.5rem",
       textAlign: "end",
+      [theme.breakpoints.down("xs")]: {
+        padding: pad / 4,
+      },
     },
 
     children: {
       paddingTop: pad / 1.5,
       border: "2px solid",
       borderColor: theme.palette.primary.dark,
-      minHeight: childrenHeight,
+      minHeight: `calc(100vh - ${pad * 2}px)`,
       padding: pad / 2,
+      [theme.breakpoints.down("xs")]: {
+        paddingTop: pad,
+        minHeight: `calc(100vh - ${pad}px)`,
+        padding: pad / 4,
+      },
     },
   };
 };
 
 //=STRT ================================
-const Layout = ({ classes, children, section }) => {
+const Layout = ({ classes, section, children, ui }) => {
   //=y State
 
   //=? Cycle
@@ -63,4 +72,17 @@ const Layout = ({ classes, children, section }) => {
   );
 };
 
-export default withStyles(style)(Layout);
+//=+ REDUX ----------------------------------------
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ui: state.ui,
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {};
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(style)(Layout));

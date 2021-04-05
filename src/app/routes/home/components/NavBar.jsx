@@ -40,11 +40,12 @@ const style = (theme) => ({
     },
   },
   navItemRoot: {
-    marginBottom: "50px",
+    marginBottom: 50,
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     [theme.breakpoints.down("xs")]: {
+      marginBottom: 20,
       width: "100%",
       flexDirection: "column-reverse",
       alignItems: "center",
