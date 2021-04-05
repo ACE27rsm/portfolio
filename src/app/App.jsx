@@ -73,21 +73,19 @@ const App = ({ classes }) => {
   //=o Variables
 
   return (
-    <HashRouter>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
 
-        <Provider store={store}>
-          <BrowserRouter>
-            <Switch>
-              <Route path={"/portfolio"} component={Portfolio}></Route>
-              <Route path={"/"} component={Home}></Route>
-              <Redirect to="/" />
-            </Switch>
-          </BrowserRouter>
-        </Provider>
-      </ThemeProvider>
-    </HashRouter>
+      <Provider store={store}>
+        <BrowserRouter basename="/portfolio">
+          <Switch>
+            <Route path={"/portfolio"} component={Portfolio}></Route>
+            <Route path={"/"} component={Home}></Route>
+            <Redirect to="/" />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
+    </ThemeProvider>
   );
 };
 

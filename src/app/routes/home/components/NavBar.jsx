@@ -83,9 +83,9 @@ const NavBar = ({ classes }) => {
 
   return (
     <Box>
-      <NavLink timeout={1000} icon="/icons/portfolio.svg" alt="Portfolio" />
-      <NavLink timeout={1500} icon="/icons/curriculum.svg" alt="Curriculum" />
-      <NavLink timeout={2000} icon="/icons/contatti.svg" alt="Contatti" />
+      <NavLink timeout={1000} icon="icons/portfolio.svg" alt="Portfolio" />
+      <NavLink timeout={1500} icon="icons/curriculum.svg" alt="Curriculum" />
+      <NavLink timeout={2000} icon="icons/contatti.svg" alt="Contatti" />
     </Box>
   );
 };

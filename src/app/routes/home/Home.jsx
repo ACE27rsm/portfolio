@@ -74,7 +74,7 @@ const Home = ({ classes }) => {
   return (
     <Box overflow="hidden">
       <div className={classes.background}>
-        <img src="/images/back2.jpg" alt="Lucia Zavatta web page" />
+        <img src="images/back2.jpg" alt="Lucia Zavatta web page" />
       </div>
 
       {/* //=? */}
