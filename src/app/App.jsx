@@ -77,7 +77,7 @@ const App = ({ classes }) => {
       <CssBaseline />
 
       <Provider store={store}>
-        <BrowserRouter basename="/portfolio">
+        <BrowserRouter>
           <Switch>
             <Route path={"/portfolio"} component={Portfolio}></Route>
             <Route path={"/"} component={Home}></Route>
