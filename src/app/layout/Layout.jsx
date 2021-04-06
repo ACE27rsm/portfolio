@@ -2,6 +2,9 @@ import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { Box, withStyles } from "@material-ui/core";
 
+//* components
+import LayoutNavBar from "./components/LayoutNavBar";
+
 //* static
 import { colors, fonts } from "../../settings";
 
@@ -49,6 +52,15 @@ const style = (theme) => {
         padding: pad / 4,
       },
     },
+
+    nav: {
+      width: "100vw",
+      position: "fixed",
+      bottom: 50,
+      left: 0,
+      display: "flex",
+      justifyContent: "center",
+    },
   };
 };
 
@@ -68,6 +80,8 @@ const Layout = ({ classes, section, children, ui }) => {
     <Box className={classes.root}>
       <Box className={classes.section}>{section}</Box>
       <Box className={classes.children}>{children}</Box>
+
+      <LayoutNavBar />
     </Box>
   );
 };
