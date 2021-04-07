@@ -121,9 +121,9 @@ const NavBar = ({ classes }) => {
       />
       <NavLink
         timeout={1500}
-        icon="icons/curriculum.svg"
-        label="Curriculum"
-        to="/portfolio"
+        icon="icons/skills.svg"
+        label="Skills"
+        to="/skills"
       />
       <NavLink
         timeout={2000}

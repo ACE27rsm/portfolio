@@ -7,7 +7,7 @@ import clsx from "clsx";
 const style = (theme) => ({
   rootNav: {
     position: "fixed",
-    bottom: 50,
+    bottom: 30,
     left: "calc(50vw - 75px)",
     [theme.breakpoints.down("lg")]: {
       left: "calc(50vw - 50px)",
@@ -251,19 +251,28 @@ const LayoutNavBar = ({ classes, location, history }) => {
   let leftIcon = null;
   let rightIcon = null;
   let topIcon = "/icons/home.svg";
+  let leftNavigate = null;
+  let rightNavigate = null;
 
   if (location.pathname === "/portfolio") {
     icon = "icons/portfolio.svg";
     leftIcon = "icons/curriculum.svg";
     rightIcon = "icons/contatti.svg";
+    leftNavigate = "/curriculum";
+    rightNavigate = "/curriculum";
   } else if (location.pathname === "/curriculum") {
     icon = "icons/curriculum.svg";
     leftIcon = "icons/portfolio.svg";
     rightIcon = "icons/contatti.svg";
+    leftNavigate = "/portfolio";
+    //TODO: sistemare NAVIGATE
+    rightNavigate = "/curriculum";
   } else if (location.pathname === "/contatti") {
     icon = "icons/contatti.svg";
     leftIcon = "icons/portfolio.svg";
     rightIcon = "icons/curriculum.svg";
+    leftNavigate = "/portfolio";
+    rightNavigate = "/curriculum";
   }
 
   return (
@@ -296,7 +305,10 @@ const LayoutNavBar = ({ classes, location, history }) => {
             {/* //=? Left Icon */}
             <Box className={clsx(classes.navIcon, "navIconLeft")}>
               <Box className={classes.iconContainer}>
-                <NavIcon icon={leftIcon} />
+                <NavIcon
+                  icon={leftIcon}
+                  onClick={() => handleNavigate(leftNavigate)}
+                />
               </Box>
             </Box>
 
@@ -309,7 +321,10 @@ const LayoutNavBar = ({ classes, location, history }) => {
               )}
             >
               <Box className={classes.iconContainer}>
-                <NavIcon icon={rightIcon} />
+                <NavIcon
+                  icon={rightIcon}
+                  onClick={() => handleNavigate(rightNavigate)}
+                />
               </Box>
             </Box>
           </Box>

@@ -20,6 +20,7 @@ import {
 //* components
 import Home from "./routes/home/Home";
 import Portfolio from "./routes/portfolio/Portfolio";
+import Skills from "./routes/skills/Skills";
 
 //* actions
 import { SET_THEME } from "../store/actions/actions";
@@ -79,8 +80,9 @@ const App = ({ classes }) => {
       <Provider store={store}>
         <BrowserRouter>
           <Switch>
-            <Route path={"/portfolio"} component={Portfolio}></Route>
-            <Route path={"/"} component={Home}></Route>
+            <Route path={"/portfolio"} component={Portfolio} />
+            <Route path={"/skills"} component={Skills} />
+            <Route path={"/"} component={Home} />
             <Redirect to="/" />
           </Switch>
         </BrowserRouter>
