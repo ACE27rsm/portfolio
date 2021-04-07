@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Box, Link, withStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import { Box, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 
@@ -35,6 +35,110 @@ const style = (theme) => ({
     [theme.breakpoints.down("xs")]: {
       width: 70,
       height: 70,
+    },
+    "&:hover": {
+      "& .navIconTop": {
+        opacity: 1,
+        top: -150,
+        [theme.breakpoints.down("lg")]: {
+          top: -100,
+        },
+        [theme.breakpoints.down("sm")]: {
+          top: -80,
+        },
+        [theme.breakpoints.down("xs")]: {
+          top: -70,
+        },
+      },
+
+      "& .navIconRight": {
+        opacity: 1,
+        left: 150,
+        [theme.breakpoints.down("lg")]: {
+          left: 100,
+        },
+        [theme.breakpoints.down("sm")]: {
+          left: 80,
+        },
+        [theme.breakpoints.down("xs")]: {
+          left: 70,
+        },
+      },
+
+      "& .navIconLeft": {
+        opacity: 1,
+        left: -150,
+        [theme.breakpoints.down("lg")]: {
+          left: -100,
+        },
+        [theme.breakpoints.down("sm")]: {
+          left: -80,
+        },
+        [theme.breakpoints.down("xs")]: {
+          left: -70,
+        },
+      },
+    },
+  },
+
+  rootIconContainerNotClicked: {
+    "& .navIconTop, .navIconRight, .navIconLeft": {
+      opacity: 0,
+      top: -0,
+    },
+
+    "& .navIconRight": {
+      opacity: 0,
+      left: 0,
+    },
+
+    "& .navIconLeft": {
+      opacity: 0,
+      left: -0,
+    },
+  },
+
+  rootIconContainerClicked: {
+    "& .navIconTop": {
+      opacity: 1,
+      top: -150,
+      [theme.breakpoints.down("lg")]: {
+        top: -100,
+      },
+      [theme.breakpoints.down("sm")]: {
+        top: -80,
+      },
+      [theme.breakpoints.down("xs")]: {
+        top: -70,
+      },
+    },
+
+    "& .navIconRight": {
+      opacity: 1,
+      left: 150,
+      [theme.breakpoints.down("lg")]: {
+        left: 100,
+      },
+      [theme.breakpoints.down("sm")]: {
+        left: 80,
+      },
+      [theme.breakpoints.down("xs")]: {
+        left: 70,
+      },
+    },
+
+    "& .navIconLeft": {
+      opacity: 1,
+      left: -150,
+      [theme.breakpoints.down("lg")]: {
+        left: -100,
+      },
+      [theme.breakpoints.down("sm")]: {
+        left: -80,
+      },
+      [theme.breakpoints.down("xs")]: {
+        left: -70,
+      },
     },
   },
 
@@ -107,91 +211,8 @@ const style = (theme) => ({
     transitionDelay: "0.2s",
   },
 
-  navIconTop: {
-    opacity: 1,
-    top: -150,
-    [theme.breakpoints.down("lg")]: {
-      top: -100,
-    },
-    [theme.breakpoints.down("sm")]: {
-      top: -80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      top: -70,
-    },
-  },
-
-  navIconLeft: {
-    opacity: 1,
-    left: -150,
-    [theme.breakpoints.down("lg")]: {
-      left: -100,
-    },
-    [theme.breakpoints.down("sm")]: {
-      left: -80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      left: -70,
-    },
-  },
-
   navIconRightDelay: {
     transitionDelay: "0.4s",
-  },
-
-  navIconRight: {
-    opacity: 1,
-    left: 150,
-    [theme.breakpoints.down("lg")]: {
-      left: 100,
-    },
-    [theme.breakpoints.down("sm")]: {
-      left: 80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      left: 70,
-    },
-  },
-
-  rootNav2: {
-    position: "fixed",
-    bottom: 40,
-    left: "calc(50vw - 280px)",
-    [theme.breakpoints.down("lg")]: {
-      left: "calc(50vw - 150px)",
-    },
-    [theme.breakpoints.down("sm")]: {
-      left: "calc(50vw - 125px)",
-    },
-    [theme.breakpoints.down("xs")]: {
-      left: "calc(50vw - 100px)",
-    },
-  },
-
-  aurea: {
-    background: "green",
-    width: 560,
-    height: 370,
-    borderTopRightRadius: 560,
-    borderTopLeftRadius: 560,
-    [theme.breakpoints.down("lg")]: {
-      width: 300,
-      height: 200,
-      borderTopRightRadius: 300,
-      borderTopLeftRadius: 300,
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: 250,
-      height: 180,
-      borderTopRightRadius: 250,
-      borderTopLeftRadius: 250,
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: 200,
-      height: 150,
-      borderTopRightRadius: 200,
-      borderTopLeftRadius: 200,
-    },
   },
 });
 
@@ -213,24 +234,13 @@ const NavIcon = withStyles(style)(({ classes, icon, menu, onClick }) => (
 //=STRT ================================
 const LayoutNavBar = ({ classes, location, history }) => {
   //=y State
-
-  const [hovered, setHovered] = useState(false);
+  const [clicked, setClicked] = useState(false);
 
   //=? Cycle
 
   //=+ Handlers
   //+ ******************************************************************
-  const handleClick = () => setHovered((prevState) => !prevState);
-
-  //+ ******************************************************************
-  const handleHoverIn = () => {
-    setHovered(true);
-  };
-
-  //+ ******************************************************************
-  const handleHoverOut = () => {
-    setHovered(false);
-  };
+  const handleClick = () => setClicked((prevState) => !prevState);
 
   //+ ******************************************************************
   const handleNavigate = (path) => history.push(path);
@@ -258,14 +268,13 @@ const LayoutNavBar = ({ classes, location, history }) => {
 
   return (
     <>
-      <Box className={classes.rootNav2} bgcolor="blue">
-        <Box className={classes.aurea} onMouseLeave={handleHoverOut} />
-      </Box>
       {icon && (
-        <Box className={classes.rootNav} bgcolor="pink">
+        <Box className={classes.rootNav}>
           <Box
-            className={classes.rootIconContainer}
-            onMouseEnter={handleHoverIn}
+            className={clsx(
+              classes.rootIconContainer,
+              clicked && classes.rootIconContainerClicked
+            )}
           >
             <Box className={classes.iconContainer}>
               <NavIcon icon={icon} menu onClick={handleClick} />
@@ -276,7 +285,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
               className={clsx(
                 classes.navIcon,
                 classes.navIconTopDelay,
-                hovered && classes.navIconTop
+                "navIconTop"
               )}
             >
               <Box className={classes.iconContainer}>
@@ -285,9 +294,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
             </Box>
 
             {/* //=? Left Icon */}
-            <Box
-              className={clsx(classes.navIcon, hovered && classes.navIconLeft)}
-            >
+            <Box className={clsx(classes.navIcon, "navIconLeft")}>
               <Box className={classes.iconContainer}>
                 <NavIcon icon={leftIcon} />
               </Box>
@@ -298,7 +305,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
               className={clsx(
                 classes.navIcon,
                 classes.navIconRightDelay,
-                hovered && classes.navIconRight
+                "navIconRight"
               )}
             >
               <Box className={classes.iconContainer}>
