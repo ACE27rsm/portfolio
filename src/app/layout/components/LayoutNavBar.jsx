@@ -20,7 +20,7 @@ const style = (theme) => ({
     },
   },
 
-  iconContainer: {
+  rootIconContainer: {
     width: 150,
     height: 150,
     position: "relative",
@@ -28,7 +28,7 @@ const style = (theme) => ({
       width: 100,
       height: 100,
     },
-    [theme.breakpoints.down("lg")]: {
+    [theme.breakpoints.down("sm")]: {
       width: 80,
       height: 80,
     },
@@ -38,7 +38,7 @@ const style = (theme) => ({
     },
   },
 
-  iconContainer2: {
+  iconContainer: {
     width: 150,
     height: 150,
     position: "relative",
@@ -109,12 +109,12 @@ const style = (theme) => ({
 
   navIconTop: {
     opacity: 1,
-    top: -200,
+    top: -150,
     [theme.breakpoints.down("lg")]: {
-      top: -150,
+      top: -100,
     },
     [theme.breakpoints.down("sm")]: {
-      top: -100,
+      top: -80,
     },
     [theme.breakpoints.down("xs")]: {
       top: -70,
@@ -123,12 +123,12 @@ const style = (theme) => ({
 
   navIconLeft: {
     opacity: 1,
-    left: -200,
+    left: -150,
     [theme.breakpoints.down("lg")]: {
-      left: -150,
+      left: -100,
     },
     [theme.breakpoints.down("sm")]: {
-      left: -100,
+      left: -80,
     },
     [theme.breakpoints.down("xs")]: {
       left: -70,
@@ -141,12 +141,12 @@ const style = (theme) => ({
 
   navIconRight: {
     opacity: 1,
-    left: 200,
+    left: 150,
     [theme.breakpoints.down("lg")]: {
-      left: 150,
+      left: 100,
     },
     [theme.breakpoints.down("sm")]: {
-      left: 100,
+      left: 80,
     },
     [theme.breakpoints.down("xs")]: {
       left: 70,
@@ -158,7 +158,10 @@ const style = (theme) => ({
     bottom: 40,
     left: "calc(50vw - 280px)",
     [theme.breakpoints.down("lg")]: {
-      left: "calc(50vw - 130px)",
+      left: "calc(50vw - 150px)",
+    },
+    [theme.breakpoints.down("sm")]: {
+      left: "calc(50vw - 125px)",
     },
     [theme.breakpoints.down("xs")]: {
       left: "calc(50vw - 100px)",
@@ -172,10 +175,16 @@ const style = (theme) => ({
     borderTopRightRadius: 560,
     borderTopLeftRadius: 560,
     [theme.breakpoints.down("lg")]: {
-      width: 260,
+      width: 300,
+      height: 200,
+      borderTopRightRadius: 300,
+      borderTopLeftRadius: 300,
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: 250,
       height: 180,
-      borderTopRightRadius: 260,
-      borderTopLeftRadius: 260,
+      borderTopRightRadius: 250,
+      borderTopLeftRadius: 250,
     },
     [theme.breakpoints.down("xs")]: {
       width: 200,
@@ -254,8 +263,13 @@ const LayoutNavBar = ({ classes, location, history }) => {
       </Box>
       {icon && (
         <Box className={classes.rootNav} bgcolor="pink">
-          <Box className={classes.iconContainer} onMouseEnter={handleHoverIn}>
-            <NavIcon icon={icon} menu onClick={handleClick} />
+          <Box
+            className={classes.rootIconContainer}
+            onMouseEnter={handleHoverIn}
+          >
+            <Box className={classes.iconContainer}>
+              <NavIcon icon={icon} menu onClick={handleClick} />
+            </Box>
 
             {/* //=? Top Icon */}
             <Box
@@ -265,7 +279,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
                 hovered && classes.navIconTop
               )}
             >
-              <Box className={classes.iconContainer2}>
+              <Box className={classes.iconContainer}>
                 <NavIcon icon={topIcon} onClick={() => handleNavigate("/")} />
               </Box>
             </Box>
@@ -274,7 +288,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
             <Box
               className={clsx(classes.navIcon, hovered && classes.navIconLeft)}
             >
-              <Box className={classes.iconContainer2}>
+              <Box className={classes.iconContainer}>
                 <NavIcon icon={leftIcon} />
               </Box>
             </Box>
@@ -287,7 +301,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
                 hovered && classes.navIconRight
               )}
             >
-              <Box className={classes.iconContainer2}>
+              <Box className={classes.iconContainer}>
                 <NavIcon icon={rightIcon} />
               </Box>
             </Box>
