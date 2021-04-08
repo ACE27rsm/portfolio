@@ -93,7 +93,7 @@ const Contatti = ({ classes }) => {
           </Box>
           <Box m={2}>
             <a
-              href="https://www.behance.net/luciazavatta/followers?background=%2Fluciazavatta"
+              href="https://www.facebook.com/lucia.zavatta.1"
               rel="noreferrer noopener"
               target="_blank"
             >
@@ -105,7 +105,7 @@ const Contatti = ({ classes }) => {
           </Box>
           <Box m={2}>
             <a
-              href="https://www.behance.net/luciazavatta/followers?background=%2Fluciazavatta"
+              href="https://www.instagram.com/lucia_zavatta/"
               rel="noreferrer noopener"
               target="_blank"
             >
