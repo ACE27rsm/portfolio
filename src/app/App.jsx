@@ -9,18 +9,13 @@ import {
 import { lightGreen, brown } from "@material-ui/core/colors";
 import { Provider } from "react-redux";
 import _ from "lodash";
-import {
-  HashRouter,
-  BrowserRouter,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 //* components
 import Home from "./routes/home/Home";
 import Portfolio from "./routes/portfolio/Portfolio";
 import Skills from "./routes/skills/Skills";
+import Contatti from "./routes/contatti/Contatti";
 
 //* actions
 import { SET_THEME } from "../store/actions/actions";
@@ -82,6 +77,7 @@ const App = ({ classes }) => {
           <Switch>
             <Route path={"/portfolio"} component={Portfolio} />
             <Route path={"/skills"} component={Skills} />
+            <Route path={"/contatti"} component={Contatti} />
             <Route path={"/"} component={Home} />
             <Redirect to="/" />
           </Switch>

@@ -1,13 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { Box, Link, Divider, withStyles } from "@material-ui/core";
+import VisibilitySensor from "react-visibility-sensor";
 import clsx from "clsx";
 
 //* components
 import Layout from "../../layout/Layout";
 
+//* satic
+import skills from "./static/skillsValues";
+
 //=b css
 import "react-image-lightbox/style.css";
 const style = (theme) => ({
+  root: {
+    color: theme.palette.primary.main,
+  },
+
+  //b ******* VALUE *******************************
+  skillValueContainer: {
+    fontFamily: "Barriecito",
+  },
+
+  //b ******* PENCIL ******************************
   pencilStart: {
     height: 100,
     width: 180,
@@ -21,35 +35,41 @@ const style = (theme) => ({
     width: 10,
     transition: "width 2s ease-in",
   },
-  pencilCenterFinal: {
-    width: 1000,
+
+  pencil6: {
+    width: "calc(60% - 340px)",
+  },
+  pencil7: {
+    width: "calc(70% - 340px)",
+  },
+  pencil8: {
+    width: "calc(80% - 340px)",
+  },
+  pencil9: {
+    width: "calc(90% - 340px)",
   },
 
-  skillValueContainer: {
-    fontFamily: "Barriecito",
+  pencilCenterFinal: {
+    width: "50%",
   },
 });
 
-//=STRT ================================
-const Curriculum = ({ classes }) => {
+//g -------------------------------------------------
+const Skill = withStyles(style)(({ classes, title, value }) => {
   //=y State
-  const [go, setGo] = useState(false);
-
-  //=? Cycle
-  useEffect(() => setTimeout(() => setGo(true), 1000), []);
+  const [visible, setVisible] = useState(false);
 
   //=+ Handlers
-
-  //=g Utils
-
-  //=o Variables
+  const handleVisible = (isVisible) => {
+    if (isVisible && !visible) setVisible(true);
+  };
 
   return (
-    <Layout section="SKILLS">
+    <VisibilitySensor onChange={handleVisible}>
       <Box color="primary.main">
         <Box display="flex" alignItems="center" flexWrap="wrap" mb={1}>
-          <Box fontSize="3rem" mr={2}>
-            Photoshop:
+          <Box fontSize="3rem" width={380} mr={2}>
+            {title}:
           </Box>
           <Box display="flex" flexGrow={1}>
             <img
@@ -60,7 +80,7 @@ const Curriculum = ({ classes }) => {
             <img
               className={clsx(
                 classes.pencilCenter,
-                go && classes.pencilCenterFinal
+                visible && classes[`pencil${value}`]
               )}
               src="images/pencilCenter.png"
               alt="pencilCenter"
@@ -71,22 +91,38 @@ const Curriculum = ({ classes }) => {
               alt="pencilEnd"
             />
           </Box>
+
           <Box fontSize="4rem" ml={2} className={classes.skillValueContainer}>
-            8/10
+            {value}/10
           </Box>
         </Box>
         <Box p={2}>
           <Divider />
         </Box>
       </Box>
-      <a
-        href="https://www.behance.net/luciazavatta/followers?background=%2Fluciazavatta"
-        target="_blank"
-      >
-        <Box bgcolor="red" width={100} height={100} />
-      </a>
+    </VisibilitySensor>
+  );
+});
+
+//=STRT ================================
+const Skills = ({ classes }) => {
+  //=y State
+
+  //=? Cycle
+
+  //=+ Handlers
+
+  //=g Utils
+
+  //=o Variables
+
+  return (
+    <Layout section="SKILLS">
+      {skills.map((s) => (
+        <Skill title={s.title} value={s.value} key={s.title} />
+      ))}
     </Layout>
   );
 };
 
-export default withStyles(style)(Curriculum);
+export default withStyles(style)(Skills);

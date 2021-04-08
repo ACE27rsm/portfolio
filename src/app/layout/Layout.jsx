@@ -10,7 +10,6 @@ import { colors, fonts } from "../../settings";
 
 //=b css
 const style = (theme) => {
-  console.log("SPACE", theme.spacing(10));
   const pad = theme.spacing(5);
 
   return {
@@ -19,7 +18,7 @@ const style = (theme) => {
       position: "relative",
       background: colors.background,
       minHeight: "100vh",
-      minWidth: "100vw",
+      minWidth: "calc(100vw - 0.5rem)",
       [theme.breakpoints.down("xs")]: {
         padding: pad / 2,
       },
@@ -51,15 +50,6 @@ const style = (theme) => {
         minHeight: `calc(100vh - ${pad}px)`,
         padding: pad / 4,
       },
-    },
-
-    nav: {
-      width: "100vw",
-      position: "fixed",
-      bottom: 50,
-      left: 0,
-      display: "flex",
-      justifyContent: "center",
     },
   };
 };

@@ -20,3 +20,17 @@ h5,
 h6 {
   font-family: "Barriecito", cursive;
 }
+
+::-webkit-scrollbar {
+  width: 0.4em;
+  height: 0.4em;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(232, 216, 206);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(232, 216, 206);
+  border-radius: 0.2rem;
+  /* outline: 1px solid; */
+}

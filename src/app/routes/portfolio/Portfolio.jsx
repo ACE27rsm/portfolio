@@ -92,7 +92,7 @@ const Portfolio = ({ classes }) => {
 
   return (
     <Layout section="PORTFOLIO">
-      <Box display="flex" flexWrap="wrap">
+      <Box display="flex" flexWrap="wrap" overflow="hidden">
         {images.map((image, index) => (
           <Pic
             key={image.src}

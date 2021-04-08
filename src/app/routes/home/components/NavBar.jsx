@@ -129,7 +129,7 @@ const NavBar = ({ classes }) => {
         timeout={2000}
         icon="icons/contatti.svg"
         label="Contatti"
-        to="/portfolio"
+        to="/contatti"
       />
     </Box>
   );

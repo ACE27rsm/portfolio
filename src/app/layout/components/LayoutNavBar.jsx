@@ -164,6 +164,7 @@ const style = (theme) => ({
   },
 
   iconRoot: {
+    cursor: "pointer",
     background: "rgba(255,255,255,0.9)",
     boxShadow: theme.shadows[2],
     borderRadius: 75,
@@ -256,23 +257,22 @@ const LayoutNavBar = ({ classes, location, history }) => {
 
   if (location.pathname === "/portfolio") {
     icon = "icons/portfolio.svg";
-    leftIcon = "icons/curriculum.svg";
+    leftIcon = "icons/skills.svg";
     rightIcon = "icons/contatti.svg";
-    leftNavigate = "/curriculum";
-    rightNavigate = "/curriculum";
-  } else if (location.pathname === "/curriculum") {
-    icon = "icons/curriculum.svg";
+    leftNavigate = "/skills";
+    rightNavigate = "/contatti";
+  } else if (location.pathname === "/skills") {
+    icon = "icons/skills.svg";
     leftIcon = "icons/portfolio.svg";
     rightIcon = "icons/contatti.svg";
     leftNavigate = "/portfolio";
-    //TODO: sistemare NAVIGATE
-    rightNavigate = "/curriculum";
+    rightNavigate = "/contatti";
   } else if (location.pathname === "/contatti") {
     icon = "icons/contatti.svg";
     leftIcon = "icons/portfolio.svg";
-    rightIcon = "icons/curriculum.svg";
+    rightIcon = "icons/skills.svg";
     leftNavigate = "/portfolio";
-    rightNavigate = "/curriculum";
+    rightNavigate = "/skills";
   }
 
   return (

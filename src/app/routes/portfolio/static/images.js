@@ -1,4 +1,4 @@
-export default [
+const images = [
   {
     type: "medium",
     src: "images/thumb/argo.jpg",
@@ -65,3 +65,5 @@ export default [
     hd: "images/hd/volto_3.jpg",
   },
 ];
+
+export default images;
