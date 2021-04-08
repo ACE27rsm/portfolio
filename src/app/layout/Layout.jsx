@@ -55,10 +55,11 @@ const style = (theme) => {
 };
 
 //=STRT ================================
-const Layout = ({ classes, section, children, ui }) => {
+const Layout = ({ classes, section, children }) => {
   //=y State
 
   //=? Cycle
+  useEffect(() => window.scrollTo(0, 0), [section]);
 
   //=+ Handlers
 

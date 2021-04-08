@@ -44,7 +44,7 @@ const style = (theme) => {
 
     "@keyframes topIcon": {
       "0%": { opacity: 0, top: 0 },
-      "40%": {
+      "25%": {
         opacity: 0,
         top: 0,
         left: size * Math.cos(3.14159),
