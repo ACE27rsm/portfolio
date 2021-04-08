@@ -203,7 +203,6 @@ const style = (theme) => {
     rootIconContainer: {
       width: size,
       height: size,
-      cursor: "pointer",
       display: "flex",
       justifyContent: "center",
       alignItems: "flex-end",
@@ -220,6 +219,10 @@ const style = (theme) => {
         color: "white",
         borderRadius: 10,
       },
+    },
+
+    clickable: {
+      cursor: "pointer",
     },
 
     menuOpen: {
@@ -352,15 +355,22 @@ const LayoutNavBar = ({ classes, location, history }) => {
   //=+ Handlers
   //+ ******************************************************************
   const handleToggleMenu = () => {
+    console.log("TOGGLE");
     if (!disabled) {
       setOpen((prevState) => !Boolean(prevState));
-      setDisabled(true);
       setDisableTimeout(setTimeout(() => setDisabled(false), 2000));
+      setDisabled(true);
     }
   };
 
   //+ ******************************************************************
-  const handleNavigate = (path) => history.push(path);
+  const handleNavigate = (path) => {
+    console.log("NAVIGATE");
+    if (!disabled) {
+      clearTimeout(disableTimeout);
+      history.push(path);
+    }
+  };
   //=g Utils
 
   //=o Variables
@@ -405,6 +415,7 @@ const LayoutNavBar = ({ classes, location, history }) => {
           <Box
             className={clsx(
               classes.rootIconContainer,
+              !disabled && classes.clickable,
               open && classes.menuOpen,
               !open && open !== null && classes.menuClose
             )}
