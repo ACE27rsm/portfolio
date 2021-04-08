@@ -8,7 +8,7 @@ const skills = [
     value: 9,
   },
   {
-    title: "inDesign",
+    title: "InDesign",
     value: 7,
   },
   {
@@ -16,7 +16,7 @@ const skills = [
     value: 8,
   },
   {
-    title: "After Effect",
+    title: "After Effects",
     value: 6,
   },
   {

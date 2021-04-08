@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Tooltip, withStyles } from "@material-ui/core";
+import { Box, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 
@@ -14,8 +14,6 @@ const style = (theme) => {
   } else if (theme.breakpoints.down("xs") === "@media (max-width:599.95px)") {
     size = 70;
   }
-
-  console.log("SIZE", size * Math.sin(22), size * Math.cos(22), Math.sin(22));
 
   return {
     rootNav: {
@@ -37,8 +35,13 @@ const style = (theme) => {
         opacity: 1,
         left: -size,
       },
+      "90%": {
+        opacity: 1,
+        left: -size,
+      },
       "100%": { opacity: 0, left: 0 },
     },
+
     "@keyframes topIcon": {
       "0%": { opacity: 0, top: 0 },
       "40%": {
@@ -68,13 +71,48 @@ const style = (theme) => {
       },
     },
 
+    "@keyframes topIconReverse": {
+      "0%": {
+        opacity: 1,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+      "30%": {
+        opacity: 1,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+      "45%": {
+        opacity: 1,
+        top: -size * Math.sin(1.8326),
+        left: size * Math.cos(1.8326),
+      },
+      "60%": {
+        opacity: 0.7,
+        top: -size * Math.sin(2.35619),
+        left: size * Math.cos(2.35619),
+      },
+      "75%": {
+        opacity: 0.3,
+        top: -size * Math.sin(2.79253),
+        left: size * Math.cos(2.79253),
+      },
+
+      "90%": {
+        opacity: 0,
+        top: 0,
+        left: size * Math.cos(3.14159),
+      },
+      "100%": { opacity: 0, top: 0 },
+    },
+
     "@keyframes rightIcon": {
       "0%": {
         opacity: 0,
         top: -size * Math.sin(1.5708),
         left: size * Math.cos(1.5708),
       },
-      "40%": {
+      "35%": {
         opacity: 0,
         top: -size * Math.sin(1.5708),
         left: size * Math.cos(1.5708),
@@ -100,16 +138,122 @@ const style = (theme) => {
         left: size * Math.cos(0),
       },
     },
-    // "@keyframes topIconXLOut": {
-    //   from: { opacity: 1, top: -150 },
-    //   to: { opacity: 0, top: 0 },
-    // },
+
+    "@keyframes rightIconReverse": {
+      "0%": {
+        opacity: 1,
+        top: -size * Math.sin(0),
+        left: size * Math.cos(0),
+      },
+
+      "5%": {
+        opacity: 1,
+        top: -size * Math.sin(0),
+        left: size * Math.cos(0),
+      },
+
+      "15%": {
+        opacity: 1,
+        top: -size * Math.sin(0.349066),
+        left: size * Math.cos(0.349066),
+      },
+
+      "25%": {
+        opacity: 0.7,
+        top: -size * Math.sin(0.785398),
+        left: size * Math.cos(0.785398),
+      },
+
+      "35%": {
+        opacity: 0,
+        top: -size * Math.sin(1.309),
+        left: size * Math.cos(1.309),
+      },
+
+      "55%": {
+        opacity: 0,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+
+      "100%": {
+        opacity: 0,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+    },
+
+    "@keyframes iconTooltip": {
+      "0%": { opacity: 0 },
+      "80%": { opacity: 0 },
+      "100%": { opacity: 1 },
+    },
+    "@keyframes iconTooltipReverse": {
+      "0%": { opacity: 1 },
+      "20%": { opacity: 0 },
+      "100%": { opacity: 0 },
+    },
+
+    "@keyframes root": {
+      "0%": { opacity: 0 },
+      "90%": { opacity: 0 },
+      "100%": { opacity: 1 },
+    },
 
     rootIconContainer: {
       width: size,
       height: size,
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "flex-end",
+      animationName: "$root",
+      animationDuration: "2.2s",
+      animationTimingFunction: "linear",
+      animationFillMode: "forwards",
+      background: "red",
       position: "relative",
+      "& .navIconTooltip": {
+        position: "absolute",
+        opacity: 1,
+        top: -30,
+        color: "white",
+        borderRadius: 10,
+        animationName: "$iconTooltipReverse",
+        animationDuration: "2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+      "& .navIconLeft": {
+        animationName: "$leftIconReverse",
+        animationDuration: "2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+      "& .navIconTop": {
+        animationName: "$topIconReverse",
+        animationDuration: "2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+      "& .navIconRight": {
+        animationName: "$rightIconReverse",
+        animationDuration: "2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
       "&:hover": {
+        width: size * 3,
+        height: size * 2,
+        borderTopLeftRadius: size,
+        borderTopRightRadius: size,
+        left: -size,
+        "& .navIconTooltip": {
+          animationName: "$iconTooltip",
+          animationDuration: "2s",
+          animationTimingFunction: "linear",
+          animationFillMode: "forwards",
+        },
         "& .navIconTop": {
           animationName: "$topIcon",
           animationDuration: "1s",
@@ -119,69 +263,24 @@ const style = (theme) => {
 
         "& .navIconRight": {
           animationName: "$rightIcon",
-          animationDuration: "1.6s",
+          animationDuration: "1.7s",
           animationTimingFunction: "linear",
           animationFillMode: "forwards",
         },
 
         "& .navIconLeft": {
           animationName: "$leftIcon",
-          animationDuration: "0.4s",
+          animationDuration: "0.2s",
           animationTimingFunction: "linear",
           animationFillMode: "forwards",
         },
       },
     },
 
-    rootIconContainerNotClicked: {
-      "& .navIconTop": {
-        animationName: "$topIcon",
-        animationDuration: "1s",
-        animationTimingFunction: "linear",
-        animationFillMode: "forwards",
-      },
-
-      "& .navIconRight": {
-        animationName: "$rightIcon",
-        animationDuration: "1.6s",
-        animationTimingFunction: "linear",
-        animationFillMode: "forwards",
-      },
-
-      "& .navIconLeft": {
-        animationName: "$leftIconReverse",
-        animationDuration: "0.4s",
-        animationTimingFunction: "linear",
-        animationFillMode: "forwards",
-      },
-    },
-
-    rootIconContainerClicked: {
-      "& .navIconTop": {
-        animationName: "$topIcon",
-        animationDuration: "1s",
-        animationTimingFunction: "linear",
-        animationFillMode: "forwards",
-      },
-
-      "& .navIconRight": {
-        animationName: "$rightIcon",
-        animationDuration: "1.6s",
-        animationTimingFunction: "linear",
-        animationFillMode: "forwards",
-      },
-
-      "& .navIconLeft": {
-        animationName: "$leftIcon",
-        animationDuration: "0.4s",
-        animationTimingFunction: "ease-in",
-        animationFillMode: "forwards",
-      },
-    },
-
     iconContainer: {
       width: size,
       height: size,
+      background: "green",
       position: "relative",
       display: "flex",
       justifyContent: "center",
@@ -189,8 +288,7 @@ const style = (theme) => {
     },
 
     iconRoot: {
-      cursor: "pointer",
-      background: "rgba(255,255,255,0.7)",
+      background: "rgba(255,255,255,0.8)",
       boxShadow: theme.shadows[2],
       borderRadius: "50%",
       transition: "0.4s",
@@ -206,44 +304,38 @@ const style = (theme) => {
       top: 0,
       left: 0,
     },
-
-    // navIconTopDelay: {
-    //   transitionDelay: "0.2s",
-    // },
-
-    navIconRightDelay: {
-      transitionDelay: "0.4s",
-    },
   };
 };
 
 //g --------------------------------------
-const NavIcon = withStyles(style)(({ classes, icon, menu, onClick }) => (
+const NavIcon = withStyles(style)(({ classes, icon, onClick, label }) => (
   <Box
-    width={menu ? 1 : "70%"}
-    height={menu ? 1 : "70%"}
-    p={1}
+    width={!label ? 1 : "70%"}
+    height={!label ? 1 : "70%"}
     className={classes.iconRoot}
     zIndex={1000}
     onClick={onClick}
-    bgcolor="orange"
+    position="relative"
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
   >
-    <Tooltip title="prova">
-      <img src={icon} alt={icon} />
-    </Tooltip>
+    {label && (
+      <Box className={clsx("navIconTooltip")} textAlign="center" width="100%">
+        {label}
+      </Box>
+    )}
+    <img src={icon} alt={icon} style={{ width: "90%", height: "90%" }} />
   </Box>
 ));
 
 //=STRT ================================
 const LayoutNavBar = ({ classes, location, history }) => {
   //=y State
-  const [clicked, setClicked] = useState(false);
 
   //=? Cycle
 
   //=+ Handlers
-  //+ ******************************************************************
-  const handleClick = () => setClicked((prevState) => !prevState);
 
   //+ ******************************************************************
   const handleNavigate = (path) => history.push(path);
@@ -253,80 +345,78 @@ const LayoutNavBar = ({ classes, location, history }) => {
   let icon = null;
   let leftIcon = null;
   let rightIcon = null;
-  let topIcon = "/icons/home.svg";
   let leftNavigate = null;
   let rightNavigate = null;
+  let rightLabel = "";
+  let leftLabel = "";
 
   if (location.pathname === "/portfolio") {
     icon = "icons/portfolio.svg";
     leftIcon = "icons/skills.svg";
-    rightIcon = "icons/contatti.svg";
     leftNavigate = "/skills";
+    leftLabel = "Skills";
+    rightIcon = "icons/contatti.svg";
     rightNavigate = "/contatti";
+    rightLabel = "Contatti";
   } else if (location.pathname === "/skills") {
     icon = "icons/skills.svg";
     leftIcon = "icons/portfolio.svg";
-    rightIcon = "icons/contatti.svg";
     leftNavigate = "/portfolio";
+    leftLabel = "Portfolio";
+    rightIcon = "icons/contatti.svg";
     rightNavigate = "/contatti";
+    rightLabel = "Contatti";
   } else if (location.pathname === "/contatti") {
     icon = "icons/contatti.svg";
     leftIcon = "icons/portfolio.svg";
-    rightIcon = "icons/skills.svg";
     leftNavigate = "/portfolio";
+    leftLabel = "Portfolio";
+    rightIcon = "icons/skills.svg";
     rightNavigate = "/skills";
+    rightLabel = "Skills";
   }
 
   return (
     <>
       {icon && (
         <Box className={classes.rootNav}>
-          <Box
-            className={clsx(
-              classes.rootIconContainer,
-              clicked && classes.rootIconContainerClicked
-            )}
-          >
-            <Box className={classes.iconContainer}>
-              <NavIcon icon={icon} menu onClick={handleClick} />
-            </Box>
-
-            {/* //=? Top Icon */}
-            <Box
-              className={clsx(
-                classes.navIcon,
-                classes.navIconTopDelay,
-                "navIconTop"
-              )}
-            >
+          <Box className={classes.rootIconContainer}>
+            <Box position="relative">
               <Box className={classes.iconContainer}>
-                <NavIcon icon={topIcon} onClick={() => handleNavigate("/")} />
+                <NavIcon icon={icon} />
               </Box>
-            </Box>
 
-            {/* //=? Left Icon */}
-            <Box className={clsx(classes.navIcon, "navIconLeft")}>
-              <Box className={classes.iconContainer}>
-                <NavIcon
-                  icon={leftIcon}
-                  onClick={() => handleNavigate(leftNavigate)}
-                />
+              {/* //=? Top Icon */}
+              <Box className={clsx(classes.navIcon, "navIconTop")}>
+                <Box className={classes.iconContainer}>
+                  <NavIcon
+                    icon="/icons/home.svg"
+                    onClick={() => handleNavigate("/")}
+                    label="Home"
+                  />
+                </Box>
               </Box>
-            </Box>
 
-            {/* //=? Right Icon */}
-            <Box
-              className={clsx(
-                classes.navIcon,
-                classes.navIconRightDelay,
-                "navIconRight"
-              )}
-            >
-              <Box className={classes.iconContainer}>
-                <NavIcon
-                  icon={rightIcon}
-                  onClick={() => handleNavigate(rightNavigate)}
-                />
+              {/* //=? Left Icon */}
+              <Box className={clsx(classes.navIcon, "navIconLeft")}>
+                <Box className={classes.iconContainer}>
+                  <NavIcon
+                    icon={leftIcon}
+                    onClick={() => handleNavigate(leftNavigate)}
+                    label={leftLabel}
+                  />
+                </Box>
+              </Box>
+
+              {/* //=? Right Icon */}
+              <Box className={clsx(classes.navIcon, "navIconRight")}>
+                <Box className={classes.iconContainer}>
+                  <NavIcon
+                    icon={rightIcon}
+                    onClick={() => handleNavigate(rightNavigate)}
+                    label={rightLabel}
+                  />
+                </Box>
               </Box>
             </Box>
           </Box>
