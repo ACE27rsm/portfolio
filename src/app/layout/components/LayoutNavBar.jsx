@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, createRef } from "react";
 import { Box, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
@@ -207,11 +207,11 @@ const style = (theme) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "flex-end",
-      animationName: "$root",
-      animationDuration: "2.2s",
-      animationTimingFunction: "linear",
-      animationFillMode: "forwards",
-      background: "red",
+      // animationName: "$root",
+      // animationDuration: "2.2s",
+      // animationTimingFunction: "linear",
+      // animationFillMode: "forwards",
+      // background: "red",
       position: "relative",
       "& .navIconTooltip": {
         position: "absolute",
@@ -219,6 +219,40 @@ const style = (theme) => {
         top: -30,
         color: "white",
         borderRadius: 10,
+      },
+    },
+
+    menuOpen: {
+      "& .navIconTooltip": {
+        animationName: "$iconTooltip",
+        animationDuration: "2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+      "& .navIconTop": {
+        animationName: "$topIcon",
+        animationDuration: "1s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+
+      "& .navIconRight": {
+        animationName: "$rightIcon",
+        animationDuration: "1.7s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+
+      "& .navIconLeft": {
+        animationName: "$leftIcon",
+        animationDuration: "0.2s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+    },
+
+    menuClose: {
+      "& .navIconTooltip": {
         animationName: "$iconTooltipReverse",
         animationDuration: "2s",
         animationTimingFunction: "linear",
@@ -242,45 +276,12 @@ const style = (theme) => {
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
-      "&:hover": {
-        width: size * 3,
-        height: size * 2,
-        borderTopLeftRadius: size,
-        borderTopRightRadius: size,
-        left: -size,
-        "& .navIconTooltip": {
-          animationName: "$iconTooltip",
-          animationDuration: "2s",
-          animationTimingFunction: "linear",
-          animationFillMode: "forwards",
-        },
-        "& .navIconTop": {
-          animationName: "$topIcon",
-          animationDuration: "1s",
-          animationTimingFunction: "linear",
-          animationFillMode: "forwards",
-        },
-
-        "& .navIconRight": {
-          animationName: "$rightIcon",
-          animationDuration: "1.7s",
-          animationTimingFunction: "linear",
-          animationFillMode: "forwards",
-        },
-
-        "& .navIconLeft": {
-          animationName: "$leftIcon",
-          animationDuration: "0.2s",
-          animationTimingFunction: "linear",
-          animationFillMode: "forwards",
-        },
-      },
     },
 
     iconContainer: {
       width: size,
       height: size,
-      background: "green",
+      // background: "green",
       position: "relative",
       display: "flex",
       justifyContent: "center",
@@ -332,10 +333,31 @@ const NavIcon = withStyles(style)(({ classes, icon, onClick, label }) => (
 //=STRT ================================
 const LayoutNavBar = ({ classes, location, history }) => {
   //=y State
+  const [disabled, setDisabled] = useState(false);
+  const [open, setOpen] = useState(null);
+  const [disableTimeout, setDisableTimeout] = useState(null);
+
+  const wrapper = createRef();
 
   //=? Cycle
+  useEffect(
+    () => () => {
+      if (disableTimeout) {
+        clearTimeout(disableTimeout);
+      }
+    },
+    [disableTimeout]
+  );
 
   //=+ Handlers
+  //+ ******************************************************************
+  const handleToggleMenu = () => {
+    if (!disabled) {
+      setOpen((prevState) => !Boolean(prevState));
+      setDisabled(true);
+      setDisableTimeout(setTimeout(() => setDisabled(false), 2000));
+    }
+  };
 
   //+ ******************************************************************
   const handleNavigate = (path) => history.push(path);
@@ -380,7 +402,14 @@ const LayoutNavBar = ({ classes, location, history }) => {
     <>
       {icon && (
         <Box className={classes.rootNav}>
-          <Box className={classes.rootIconContainer}>
+          <Box
+            className={clsx(
+              classes.rootIconContainer,
+              open && classes.menuOpen,
+              !open && open !== null && classes.menuClose
+            )}
+            onClick={handleToggleMenu}
+          >
             <Box position="relative">
               <Box className={classes.iconContainer}>
                 <NavIcon icon={icon} />

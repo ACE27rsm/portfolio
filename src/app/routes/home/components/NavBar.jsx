@@ -52,12 +52,23 @@ const style = (theme) => ({
     },
   },
 
+  "@keyframes appear": {
+    "0%": { opacity: 0 },
+    "95%": { opacity: 0 },
+    "100%": { opacity: 1 },
+  },
+
   navLabel: {
     marginRight: theme.spacing(2),
     fontSize: "1.2rem",
     textAlign: "end",
     flexGrow: 1,
     color: theme.palette.primary.dark,
+    animationName: "$appear",
+    animationDuration: "2.5s",
+    animationTimingFunction: "linear",
+    animationFillMode: "forwards",
+
     [theme.breakpoints.down("xs")]: {
       width: "100%",
       textAlign: "center",
@@ -70,16 +81,13 @@ const style = (theme) => ({
 //g -----------------------------------
 const NavLink = withStyles(style)(({ classes, timeout, icon, label, to }) => {
   //=y State
-  const [labelIn, setLabelIn] = useState(false);
 
   //=? Cycle
-  useEffect(() => setTimeout(() => setLabelIn(true), 2500), []);
 
   return (
     <Box className={classes.navItemRoot}>
-      <Fade in={labelIn}>
-        <Box className={classes.navLabel}>{label}</Box>
-      </Fade>
+      <Box className={classes.navLabel}>{label}</Box>
+
       <Slide
         direction="left"
         in={true}
