@@ -3,8 +3,11 @@ import { Box, Link, Divider, withStyles } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBehanceSquare,
+  faBehance,
+  faFacebookF,
   faFacebookSquare,
   faInstagramSquare,
+  faFacebook,
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
@@ -23,6 +26,7 @@ const style = (theme) => ({
   },
 
   email: {
+    marginTop: theme.spacing(30),
     color: "primary.main",
     width: "100%",
     textAlign: "center",
@@ -63,7 +67,16 @@ const Contatti = ({ classes }) => {
   return (
     <Layout section="CONTATTI">
       <div className={classes.root}>
-        <div className={classes.email}>info@luciazavatta.com</div>
+        <div className={classes.email}>
+          <a
+            href="mailto:info@luciazavatta.com"
+            rel="noreferrer noopener"
+            target="_blank"
+            style={{ textDecoration: "none" }}
+          >
+            <Box color="primary.main">info@luciazavatta.com</Box>
+          </a>
+        </div>
         {/* //=? Icons */}
         <Box display="flex">
           <Box m={2}>

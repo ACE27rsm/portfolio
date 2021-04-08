@@ -1,221 +1,221 @@
 import React, { useState } from "react";
-import { Box, withStyles } from "@material-ui/core";
+import { Box, Tooltip, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
 
 //=b css
-const style = (theme) => ({
-  rootNav: {
-    position: "fixed",
-    bottom: 30,
-    left: "calc(50vw - 75px)",
-    [theme.breakpoints.down("lg")]: {
-      left: "calc(50vw - 50px)",
-    },
-    [theme.breakpoints.down("sm")]: {
-      left: "calc(50vw - 40px)",
-    },
-    [theme.breakpoints.down("xs")]: {
-      left: "calc(50vw - 35px)",
-    },
-  },
+const style = (theme) => {
+  let size = 150;
 
-  rootIconContainer: {
-    width: 150,
-    height: 150,
-    position: "relative",
-    [theme.breakpoints.down("lg")]: {
-      width: 100,
-      height: 100,
+  if (theme.breakpoints.down("lg") === "@media (max-width:1919.95px)") {
+    size = 100;
+  } else if (theme.breakpoints.down("sm") === "@media (max-width:959.95px)") {
+    size = 80;
+  } else if (theme.breakpoints.down("xs") === "@media (max-width:599.95px)") {
+    size = 70;
+  }
+
+  console.log("SIZE", size * Math.sin(22), size * Math.cos(22), Math.sin(22));
+
+  return {
+    rootNav: {
+      position: "fixed",
+      bottom: 30,
+      left: `calc(50vw - ${size / 2}px)`,
     },
-    [theme.breakpoints.down("sm")]: {
-      width: 80,
-      height: 80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: 70,
-      height: 70,
-    },
-    "&:hover": {
-      "& .navIconTop": {
+
+    "@keyframes leftIcon": {
+      "0%": { opacity: 0, left: 0 },
+      "100%": {
         opacity: 1,
-        top: -150,
-        [theme.breakpoints.down("lg")]: {
-          top: -100,
+        left: -size,
+      },
+    },
+
+    "@keyframes leftIconReverse": {
+      "0%": {
+        opacity: 1,
+        left: -size,
+      },
+      "100%": { opacity: 0, left: 0 },
+    },
+    "@keyframes topIcon": {
+      "0%": { opacity: 0, top: 0 },
+      "40%": {
+        opacity: 0,
+        top: 0,
+        left: size * Math.cos(3.14159),
+      },
+      "55%": {
+        opacity: 0.3,
+        top: -size * Math.sin(2.79253),
+        left: size * Math.cos(2.79253),
+      },
+      "70%": {
+        opacity: 0.7,
+        top: -size * Math.sin(2.35619),
+        left: size * Math.cos(2.35619),
+      },
+      "85%": {
+        opacity: 0.7,
+        top: -size * Math.sin(1.8326),
+        left: size * Math.cos(1.8326),
+      },
+      "100%": {
+        opacity: 1,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+    },
+
+    "@keyframes rightIcon": {
+      "0%": {
+        opacity: 0,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+      "40%": {
+        opacity: 0,
+        top: -size * Math.sin(1.5708),
+        left: size * Math.cos(1.5708),
+      },
+      "55%": {
+        opacity: 0,
+        top: -size * Math.sin(1.309),
+        left: size * Math.cos(1.309),
+      },
+      "70%": {
+        opacity: 0.7,
+        top: -size * Math.sin(0.785398),
+        left: size * Math.cos(0.785398),
+      },
+      "85%": {
+        opacity: 1,
+        top: -size * Math.sin(0.349066),
+        left: size * Math.cos(0.349066),
+      },
+      "100%": {
+        opacity: 1,
+        top: -size * Math.sin(0),
+        left: size * Math.cos(0),
+      },
+    },
+    // "@keyframes topIconXLOut": {
+    //   from: { opacity: 1, top: -150 },
+    //   to: { opacity: 0, top: 0 },
+    // },
+
+    rootIconContainer: {
+      width: size,
+      height: size,
+      position: "relative",
+      "&:hover": {
+        "& .navIconTop": {
+          animationName: "$topIcon",
+          animationDuration: "1s",
+          animationTimingFunction: "linear",
+          animationFillMode: "forwards",
         },
-        [theme.breakpoints.down("sm")]: {
-          top: -80,
+
+        "& .navIconRight": {
+          animationName: "$rightIcon",
+          animationDuration: "1.6s",
+          animationTimingFunction: "linear",
+          animationFillMode: "forwards",
         },
-        [theme.breakpoints.down("xs")]: {
-          top: -70,
+
+        "& .navIconLeft": {
+          animationName: "$leftIcon",
+          animationDuration: "0.4s",
+          animationTimingFunction: "linear",
+          animationFillMode: "forwards",
         },
+      },
+    },
+
+    rootIconContainerNotClicked: {
+      "& .navIconTop": {
+        animationName: "$topIcon",
+        animationDuration: "1s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
       },
 
       "& .navIconRight": {
-        opacity: 1,
-        left: 150,
-        [theme.breakpoints.down("lg")]: {
-          left: 100,
-        },
-        [theme.breakpoints.down("sm")]: {
-          left: 80,
-        },
-        [theme.breakpoints.down("xs")]: {
-          left: 70,
-        },
+        animationName: "$rightIcon",
+        animationDuration: "1.6s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
       },
 
       "& .navIconLeft": {
-        opacity: 1,
-        left: -150,
-        [theme.breakpoints.down("lg")]: {
-          left: -100,
-        },
-        [theme.breakpoints.down("sm")]: {
-          left: -80,
-        },
-        [theme.breakpoints.down("xs")]: {
-          left: -70,
-        },
+        animationName: "$leftIconReverse",
+        animationDuration: "0.4s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
       },
     },
-  },
 
-  rootIconContainerNotClicked: {
-    "& .navIconTop, .navIconRight, .navIconLeft": {
-      opacity: 0,
-      top: -0,
+    rootIconContainerClicked: {
+      "& .navIconTop": {
+        animationName: "$topIcon",
+        animationDuration: "1s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+
+      "& .navIconRight": {
+        animationName: "$rightIcon",
+        animationDuration: "1.6s",
+        animationTimingFunction: "linear",
+        animationFillMode: "forwards",
+      },
+
+      "& .navIconLeft": {
+        animationName: "$leftIcon",
+        animationDuration: "0.4s",
+        animationTimingFunction: "ease-in",
+        animationFillMode: "forwards",
+      },
     },
 
-    "& .navIconRight": {
+    iconContainer: {
+      width: size,
+      height: size,
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+
+    iconRoot: {
+      cursor: "pointer",
+      background: "rgba(255,255,255,0.7)",
+      boxShadow: theme.shadows[2],
+      borderRadius: "50%",
+      transition: "0.4s",
+      position: "absolute",
+    },
+
+    navIcon: {
+      position: "absolute",
+      borderRadius: "50%",
+      width: size,
+      height: size,
       opacity: 0,
+      top: 0,
       left: 0,
     },
 
-    "& .navIconLeft": {
-      opacity: 0,
-      left: -0,
-    },
-  },
+    // navIconTopDelay: {
+    //   transitionDelay: "0.2s",
+    // },
 
-  rootIconContainerClicked: {
-    "& .navIconTop": {
-      opacity: 1,
-      top: -150,
-      [theme.breakpoints.down("lg")]: {
-        top: -100,
-      },
-      [theme.breakpoints.down("sm")]: {
-        top: -80,
-      },
-      [theme.breakpoints.down("xs")]: {
-        top: -70,
-      },
+    navIconRightDelay: {
+      transitionDelay: "0.4s",
     },
-
-    "& .navIconRight": {
-      opacity: 1,
-      left: 150,
-      [theme.breakpoints.down("lg")]: {
-        left: 100,
-      },
-      [theme.breakpoints.down("sm")]: {
-        left: 80,
-      },
-      [theme.breakpoints.down("xs")]: {
-        left: 70,
-      },
-    },
-
-    "& .navIconLeft": {
-      opacity: 1,
-      left: -150,
-      [theme.breakpoints.down("lg")]: {
-        left: -100,
-      },
-      [theme.breakpoints.down("sm")]: {
-        left: -80,
-      },
-      [theme.breakpoints.down("xs")]: {
-        left: -70,
-      },
-    },
-  },
-
-  iconContainer: {
-    width: 150,
-    height: 150,
-    position: "relative",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    [theme.breakpoints.down("lg")]: {
-      width: 100,
-      height: 100,
-    },
-    [theme.breakpoints.down("sm")]: {
-      width: 80,
-      height: 80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      width: 70,
-      height: 70,
-    },
-  },
-
-  iconRoot: {
-    cursor: "pointer",
-    background: "rgba(255,255,255,0.9)",
-    boxShadow: theme.shadows[2],
-    borderRadius: 75,
-    transition: "0.4s",
-    position: "absolute",
-    [theme.breakpoints.down("lg")]: {
-      borderRadius: 50,
-    },
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: 40,
-    },
-    [theme.breakpoints.down("xs")]: {
-      borderRadius: 35,
-    },
-  },
-
-  navIcon: {
-    position: "absolute",
-    borderRadius: 75,
-    width: 150,
-    height: 150,
-    opacity: 0,
-    top: 0,
-    left: 0,
-    transition:
-      "opacity 0.3s linear, top 0.3s ease-in, left 0.3s ease-in, width 0.3s ease-in",
-    [theme.breakpoints.down("lg")]: {
-      borderRadius: 50,
-      width: 100,
-      height: 100,
-    },
-    [theme.breakpoints.down("sm")]: {
-      borderRadius: 40,
-      width: 80,
-      height: 80,
-    },
-    [theme.breakpoints.down("xs")]: {
-      borderRadius: 35,
-      width: 70,
-      height: 70,
-    },
-  },
-
-  navIconTopDelay: {
-    transitionDelay: "0.2s",
-  },
-
-  navIconRightDelay: {
-    transitionDelay: "0.4s",
-  },
-});
+  };
+};
 
 //g --------------------------------------
 const NavIcon = withStyles(style)(({ classes, icon, menu, onClick }) => (
@@ -228,7 +228,9 @@ const NavIcon = withStyles(style)(({ classes, icon, menu, onClick }) => (
     onClick={onClick}
     bgcolor="orange"
   >
-    <img src={icon} alt={icon} />
+    <Tooltip title="prova">
+      <img src={icon} alt={icon} />
+    </Tooltip>
   </Box>
 ));
 
