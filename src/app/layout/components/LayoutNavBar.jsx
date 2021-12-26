@@ -2,18 +2,19 @@ import React, { useState, useEffect, createRef } from "react";
 import { Box, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
+import { a, config, useTransition } from "react-spring";
 
 //=b css
 const style = (theme) => {
-  let size = 150;
+  let size = 100;
 
-  if (theme.breakpoints.down("lg") === "@media (max-width:1919.95px)") {
-    size = 100;
-  } else if (theme.breakpoints.down("sm") === "@media (max-width:959.95px)") {
-    size = 80;
-  } else if (theme.breakpoints.down("xs") === "@media (max-width:599.95px)") {
-    size = 70;
-  }
+  // if (theme.breakpoints.down("lg") === "@media (max-width:1919.95px)") {
+  //   size = 100;
+  // } else if (theme.breakpoints.down("sm") === "@media (max-width:959.95px)") {
+  //   size = 80;
+  // } else if (theme.breakpoints.down("xs") === "@media (max-width:599.95px)") {
+  //   size = 70;
+  // }
 
   return {
     rootNav: {
@@ -228,7 +229,7 @@ const style = (theme) => {
     menuOpen: {
       "& .navIconTooltip": {
         animationName: "$iconTooltip",
-        animationDuration: "2s",
+        animationDuration: "1s",
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
@@ -257,25 +258,25 @@ const style = (theme) => {
     menuClose: {
       "& .navIconTooltip": {
         animationName: "$iconTooltipReverse",
-        animationDuration: "2s",
+        animationDuration: "1s",
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
       "& .navIconLeft": {
         animationName: "$leftIconReverse",
-        animationDuration: "2s",
+        animationDuration: "1s",
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
       "& .navIconTop": {
         animationName: "$topIconReverse",
-        animationDuration: "2s",
+        animationDuration: "1s",
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
       "& .navIconRight": {
         animationName: "$rightIconReverse",
-        animationDuration: "2s",
+        animationDuration: "1s",
         animationTimingFunction: "linear",
         animationFillMode: "forwards",
       },
@@ -284,7 +285,6 @@ const style = (theme) => {
     iconContainer: {
       width: size,
       height: size,
-      // background: "green",
       position: "relative",
       display: "flex",
       justifyContent: "center",
@@ -302,10 +302,18 @@ const style = (theme) => {
     navIcon: {
       position: "absolute",
       borderRadius: "50%",
-      width: size,
-      height: size,
-      opacity: 0,
+    },
+
+    navIconLeft: {
+      left: -size,
       top: 0,
+    },
+    navIconRight: {
+      left: size,
+      top: 0,
+    },
+    navIconTop: {
+      top: -size,
       left: 0,
     },
   };
@@ -338,19 +346,51 @@ const LayoutNavBar = ({ classes, location, history }) => {
   //=y State
   const [disabled, setDisabled] = useState(false);
   const [open, setOpen] = useState(null);
-  const [disableTimeout, setDisableTimeout] = useState(null);
+  // const [disableTimeout, setDisableTimeout] = useState(null);
 
-  const wrapper = createRef();
+  const transition = useTransition(open, {
+    from: {
+      opacity: 0,
+      leftLeft: 1.5708,
+      leftBottom: 1.5708,
+      rightLeft: 1.5708,
+      rightTop: 1.5708,
+      topTop: 0,
+      topLeft: 3.14159,
+    },
+    enter: {
+      opacity: 1,
+      leftLeft: 0,
+      leftBottom: 0,
+      rightLeft: 0,
+      rightTop: 0,
+      topTop: 1.5708,
+      topLeft: 1.5708,
+    },
+    leave: {
+      opacity: 0,
+      leftLeft: 1.5708,
+      leftBottom: 1.5708,
+      rightLeft: 1.5708,
+      rightTop: 1.5708,
+      topTop: 0,
+      topLeft: 3.14159,
+    },
+    reverse: open,
+    delay: 200,
+    config: config.slow,
+    // onRest: () => setOpen(!open),
+  });
 
   //=? Cycle
-  useEffect(
-    () => () => {
-      if (disableTimeout) {
-        clearTimeout(disableTimeout);
-      }
-    },
-    [disableTimeout]
-  );
+  // useEffect(
+  //   () => () => {
+  //     if (disableTimeout) {
+  //       clearTimeout(disableTimeout);
+  //     }
+  //   },
+  //   [disableTimeout]
+  // );
 
   //=+ Handlers
   //+ ******************************************************************
@@ -358,18 +398,14 @@ const LayoutNavBar = ({ classes, location, history }) => {
     console.log("TOGGLE");
     if (!disabled) {
       setOpen((prevState) => !Boolean(prevState));
-      setDisableTimeout(setTimeout(() => setDisabled(false), 2000));
-      setDisabled(true);
     }
   };
 
   //+ ******************************************************************
   const handleNavigate = (path) => {
     console.log("NAVIGATE");
-    if (!disabled) {
-      clearTimeout(disableTimeout);
-      history.push(path);
-    }
+
+    history.push(path);
   };
   //=g Utils
 
@@ -426,38 +462,74 @@ const LayoutNavBar = ({ classes, location, history }) => {
                 <NavIcon icon={icon} />
               </Box>
 
-              {/* //=? Top Icon */}
-              <Box className={clsx(classes.navIcon, "navIconTop")}>
-                <Box className={classes.iconContainer}>
-                  <NavIcon
-                    icon="/icons/home.svg"
-                    onClick={() => handleNavigate("/")}
-                    label="Home"
-                  />
-                </Box>
-              </Box>
+              {transition(
+                (style, item) =>
+                  item && (
+                    <>
+                      {/* //=? Top Icon */}
+                      <a.div
+                        className={clsx(classes.navIcon, classes.navIconTop)}
+                        style={{
+                          ...style,
+                          left: style.topLeft.to(
+                            (left) => 100 * Math.cos(left)
+                          ),
+                          top: style.topTop.to((top) => -100 * Math.sin(top)),
+                        }}
+                      >
+                        <Box className={classes.iconContainer}>
+                          <NavIcon
+                            icon="/icons/home.svg"
+                            onClick={() => handleNavigate("/")}
+                            label="Home"
+                          />
+                        </Box>
+                      </a.div>
 
-              {/* //=? Left Icon */}
-              <Box className={clsx(classes.navIcon, "navIconLeft")}>
-                <Box className={classes.iconContainer}>
-                  <NavIcon
-                    icon={leftIcon}
-                    onClick={() => handleNavigate(leftNavigate)}
-                    label={leftLabel}
-                  />
-                </Box>
-              </Box>
+                      {/* //=? Left Icon */}
+                      <a.div
+                        className={clsx(classes.navIcon, classes.navIconLeft)}
+                        style={{
+                          ...style,
+                          left: style.leftLeft.to(
+                            (left) => -100 * Math.cos(left)
+                          ),
+                          top: style.leftBottom.to(
+                            (bottom) => 100 * Math.sin(bottom)
+                          ),
+                        }}
+                      >
+                        <Box className={classes.iconContainer}>
+                          <NavIcon
+                            icon={leftIcon}
+                            onClick={() => handleNavigate(leftNavigate)}
+                            label={leftLabel}
+                          />
+                        </Box>
+                      </a.div>
 
-              {/* //=? Right Icon */}
-              <Box className={clsx(classes.navIcon, "navIconRight")}>
-                <Box className={classes.iconContainer}>
-                  <NavIcon
-                    icon={rightIcon}
-                    onClick={() => handleNavigate(rightNavigate)}
-                    label={rightLabel}
-                  />
-                </Box>
-              </Box>
+                      {/* //=? Right Icon */}
+                      <a.div
+                        className={clsx(classes.navIcon, classes.navIconRight)}
+                        style={{
+                          ...style,
+                          left: style.rightLeft.to(
+                            (left) => 100 * Math.cos(left)
+                          ),
+                          top: style.rightTop.to((top) => -100 * Math.sin(top)),
+                        }}
+                      >
+                        <Box className={classes.iconContainer}>
+                          <NavIcon
+                            icon={rightIcon}
+                            onClick={() => handleNavigate(rightNavigate)}
+                            label={rightLabel}
+                          />
+                        </Box>
+                      </a.div>
+                    </>
+                  )
+              )}
             </Box>
           </Box>
         </Box>
