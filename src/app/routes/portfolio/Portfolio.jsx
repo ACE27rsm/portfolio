@@ -105,12 +105,12 @@ const Portfolio = ({ classes }) => {
     <Layout section="PORTFOLIO">
       <Box display="flex" flexWrap="wrap" overflow="hidden">
         {/* {images.map((image, index) => ( */}
-        {transition((style, image, index) => (
+        {transition((style, image, { key }) => (
           <Pic
             key={image.src}
             type={image.type}
             src={image.src}
-            index={index}
+            index={key}
             handleOpen={handleOpen}
             style={style}
           />
