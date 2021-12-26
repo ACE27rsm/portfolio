@@ -331,9 +331,22 @@ const NavIcon = withStyles(style)(({ classes, icon, onClick, label }) => (
     display="flex"
     justifyContent="center"
     alignItems="center"
+    style={{
+      "-webkit-tap-highlight-color": "rgba(0,0,0,0)",
+      "-webkit-tap-highlight-color": "transparent",
+    }}
   >
     {label && (
-      <Box className={clsx("navIconTooltip")} textAlign="center" width="100%">
+      <Box
+        className={clsx("navIconTooltip")}
+        textAlign="center"
+        width="100%"
+        fontWeight="bold"
+        style={{
+          "-webkit-tap-highlight-color": "rgba(0,0,0,0)",
+          "-webkit-tap-highlight-color": "transparent",
+        }}
+      >
         {label}
       </Box>
     )}
@@ -447,7 +460,13 @@ const LayoutNavBar = ({ classes, location, history }) => {
   return (
     <>
       {icon && (
-        <Box className={classes.rootNav}>
+        <Box
+          className={classes.rootNav}
+          style={{
+            "-webkit-tap-highlight-color": "rgba(0,0,0,0)",
+            "-webkit-tap-highlight-color": "transparent",
+          }}
+        >
           <Box
             className={clsx(
               classes.rootIconContainer,
