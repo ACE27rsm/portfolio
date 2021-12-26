@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Button, withStyles } from "@material-ui/core";
 import _ from "lodash";
 import Lightbox from "react-image-lightbox";
+import { a, useTransition, config } from "react-spring";
 import clsx from "clsx";
 
 //* components
@@ -54,20 +55,21 @@ const style = (theme) => ({
 
 //g -------------------------------------------------------
 const Pic = withStyles(style)(
-  ({ classes, src, alt, type, handleOpen, index }) => {
+  ({ classes, src, alt, type, handleOpen, index, style }) => {
     return (
-      <Box
+      <a.div
         className={clsx(
           classes.picRoot,
           type === "large" && classes.picLarge,
           type === "medium" && classes.picMedium,
           type === "small" && classes.picSmall
         )}
+        style={style}
       >
         <Box width={1} height={1} onClick={() => handleOpen(index)}>
           <img src={src} alt={alt} />
         </Box>
-      </Box>
+      </a.div>
     );
   }
 );
@@ -77,6 +79,15 @@ const Portfolio = ({ classes }) => {
   //=y State
   const [isOpen, setIsOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
+
+  const transition = useTransition(images, {
+    key: (s, i) => i,
+    trail: 50,
+    config: config.stiff,
+    from: { opacity: 0, scale: 0 },
+    enter: { opacity: 1, scale: 1 },
+    leave: { opacity: 0, scale: 0 },
+  });
 
   //=? Cycle
 
@@ -93,13 +104,15 @@ const Portfolio = ({ classes }) => {
   return (
     <Layout section="PORTFOLIO">
       <Box display="flex" flexWrap="wrap" overflow="hidden">
-        {images.map((image, index) => (
+        {/* {images.map((image, index) => ( */}
+        {transition((style, image, index) => (
           <Pic
             key={image.src}
             type={image.type}
             src={image.src}
             index={index}
             handleOpen={handleOpen}
+            style={style}
           />
         ))}
       </Box>
