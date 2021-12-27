@@ -85,7 +85,13 @@ const NavLink = withStyles(style)(({ classes, timeout, icon, label, to }) => {
   //=? Cycle
 
   return (
-    <Box className={classes.navItemRoot}>
+    <Box
+      className={classes.navItemRoot}
+      style={{
+        "-webkit-tap-highlight-color": "rgba(0,0,0,0)",
+        "-webkit-tap-highlight-color": "transparent",
+      }}
+    >
       <Box className={classes.navLabel}>{label}</Box>
 
       <Slide
