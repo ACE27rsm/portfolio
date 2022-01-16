@@ -74,7 +74,7 @@ const Contatti = ({ classes }) => {
             target="_blank"
             style={{ textDecoration: "none" }}
           >
-            <Box color="primary.main">info@luciazavatta.com</Box>
+            <Box color="primary.main">- info@luciazavatta.com -</Box>
           </a>
         </div>
         {/* //=? Icons */}

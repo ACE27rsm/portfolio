@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Box, Fade, Typography, withStyles } from "@material-ui/core";
-import _ from "lodash";
 
 //* compnents
 import NavBar from "./components/NavBar";

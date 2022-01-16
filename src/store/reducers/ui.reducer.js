@@ -8,21 +8,6 @@ const initialState = {
   theme: {},
   mq: {},
   componentStatus: {},
-  nService: {
-    queueLength: 0,
-  },
-  starScream: {
-    queueLength: 0,
-  },
-  pitStop: {
-    queueLength: 0,
-  },
-  phoenix: {
-    queueLength: 0,
-  },
-  ninja: {
-    queueLength: 0,
-  },
 };
 
 const slice = createSlice({

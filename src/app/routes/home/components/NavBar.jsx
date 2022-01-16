@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Box, Fade, Slide, withStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import _ from "lodash";
 
 //=b css
 const style = (theme) => ({

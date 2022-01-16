@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, withStyles } from "@material-ui/core";
-import _ from "lodash";
 import Lightbox from "react-image-lightbox";
 import { a, useTransition, config } from "react-spring";
 import clsx from "clsx";

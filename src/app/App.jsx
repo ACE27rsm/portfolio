@@ -8,7 +8,6 @@ import {
 } from "@material-ui/core";
 import { lightGreen, brown } from "@material-ui/core/colors";
 import { Provider } from "react-redux";
-import _ from "lodash";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 //* components
