@@ -2,7 +2,7 @@ import React, { useState, useEffect, createRef } from "react";
 import { Box, withStyles } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import clsx from "clsx";
-import { a, config, useTransition } from "react-spring";
+import { a, config, useTransition } from "@react-spring/web";
 
 //=b css
 const style = (theme) => {

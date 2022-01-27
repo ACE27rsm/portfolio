@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Button, withStyles } from "@material-ui/core";
 import Lightbox from "react-image-lightbox";
-import { a, useTransition, config } from "react-spring";
+import { a, useTransition, config } from "@react-spring/web";
 import clsx from "clsx";
 
 //* components
